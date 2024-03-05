@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx';
 import './main.css';
 import Header from './layout/Header.jsx'
-import Login from './pages/Login.jsx';
+import Footer from './layout/Footer.jsx';
+import SignIn from './pages/SignIn.jsx';
+import User from './pages/User.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -12,9 +14,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
      <Header />
       <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/sign-in" element={<Login />} />
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/user" element={<User />} />
       </Routes>
-    
+    <Footer />
     </Router>
    
     

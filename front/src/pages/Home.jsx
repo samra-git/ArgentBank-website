@@ -6,7 +6,7 @@ import iconSecurity from '../assets/icon-security.png'
 
 const Home = () => {
     return (
-        <div>
+        <div className="body">
             <div className="hero"  style={{backgroundImage: `url(${bankTree})`}}>
                 <section className="hero-content">
                     <h2 className="sr-only">Promoted Content</h2>

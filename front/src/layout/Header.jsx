@@ -15,14 +15,8 @@ const Header = () => {
             alt="Argent Bank Logo"
           />
         </Link>
-          
-          {/* <h1 className="sr-only">Argent Bank</h1> */}
-        
         <div>
-          <Link to="/sign-in" className="main-nav-item"><FaCircleUser/>Sign In</Link>
-          {/* <a  href="./sign-in.html"> */}
-         
-          
+          <Link to="/sign-in" className="main-nav-item"><FaCircleUser />Sign In</Link>
         </div>
       </nav>
     </div>
