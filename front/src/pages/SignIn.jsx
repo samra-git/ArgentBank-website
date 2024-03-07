@@ -34,9 +34,8 @@ const SignIn = () => {
                 navigate('/user')
             }
             setLoading(false);
-            setError(null);
+            // setError(null);
             
-
 
         } catch (error) {
             setError(error.message)
@@ -84,6 +83,9 @@ const SignIn = () => {
                         {/* <!-- <button class="sign-in-button">Sign In</button> --> */}
                         {/* <!--  -->Name */}
                     </form>
+                    <div>
+                       <p className='error'>{error && '"email et/ou mot de passe incorrect"'}</p>
+                    </div>
                 </section>
             </div>
         </>

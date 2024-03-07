@@ -167,6 +167,12 @@ body, .body {
   color: #fff;
 }
 
+.error {
+  color: red;
+  font-style: italic;
+  font-size: smaller;
+}
+
 .sign-in-content {
   box-sizing: border-box;
   background-color: white;
