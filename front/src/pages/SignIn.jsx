@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
+import { signInFailure, signInStart, signInSucces } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const SignIn = () => {
     const [formData, setFormData] = useState({});
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const { loading, error } = useSelector((state) => state.user)
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            setLoading(true)
+            dispatch(signInStart())
             const res = await fetch('http://localhost:3001/api/v1/user/login',
             {
                 method: 'POST',
@@ -27,13 +29,13 @@ const SignIn = () => {
             console.log(data);
 
             if (data.status !== 200){
-                setError(data.message)
-                setLoading(false)
+                dispatch(signInFailure(data.message))
                 
             } else{
                 navigate('/user')
+                dispatch(signInSucces(data))
             }
-            setLoading(false);
+            
             // setError(null);
             
 

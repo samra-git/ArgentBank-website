@@ -7,19 +7,23 @@ import Header from './layout/Header.jsx'
 import Footer from './layout/Footer.jsx';
 import SignIn from './pages/SignIn.jsx';
 import User from './pages/User.jsx';
+import Error from './pages/Error.jsx';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <Provider store={store}>
     <Router>
      <Header />
       <Routes>
       <Route path="/" element={<App />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/user" element={<User />} />
+      <Route path="*"  element={<Error />} />
       </Routes>
     <Footer />
     </Router>
    
     
-   </React.StrictMode>,
+   </Provider>,
 )
