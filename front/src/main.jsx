@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx';
@@ -9,10 +9,12 @@ import SignIn from './pages/SignIn.jsx';
 import User from './pages/User.jsx';
 import Error from './pages/Error.jsx';
 import { Provider } from 'react-redux';
-import { store } from './redux/store.js'
+import { persistor, store } from './redux/store.js'
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
     <Router>
      <Header />
       <Routes>
@@ -23,7 +25,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </Routes>
     <Footer />
     </Router>
-   
-    
+    </PersistGate>
    </Provider>,
 )

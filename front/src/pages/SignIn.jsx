@@ -40,8 +40,8 @@ const SignIn = () => {
             
 
         } catch (error) {
-            setError(error.message)
-            setLoading(false)
+            dispatch(signInFailure(error.message))
+            dispatch(signInStart(false))
 
         }
 
@@ -86,7 +86,7 @@ const SignIn = () => {
                         {/* <!--  -->Name */}
                     </form>
                     <div>
-                       <p className='error'>{error && '"email et/ou mot de passe incorrect"'}</p>
+                       <p className='error'>{error && 'email et/ou mot de passe incorrect'}</p>
                     </div>
                 </section>
             </div>

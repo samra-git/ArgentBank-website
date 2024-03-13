@@ -21,10 +21,17 @@ const userSlice = createSlice({
         signInFailure: (state, action) => {
             state.error = action.payload;
             state.loading = false;
+        },
+        dataProfile: (state, action) => {
+            state.email = action.payload.body.email
+            state.firstName = action.payload.body.firstName
+            state.lastName = action.payload.body.lastName
+            state.userName = action.payload.body.userName
+            
         }
     }
 })
 
-export const { signInStart, signInSucces, signInFailure } = userSlice.actions;
+export const { signInStart, signInSucces, signInFailure, dataProfile } = userSlice.actions;
 
 export default userSlice.reducer;
