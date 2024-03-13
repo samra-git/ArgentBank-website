@@ -2,12 +2,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx';
-import './main.css';
-import Header from './layout/Header.jsx'
-import Footer from './layout/Footer.jsx';
-import SignIn from './pages/SignIn.jsx';
-import User from './pages/User.jsx';
-import Error from './pages/Error.jsx';
+import './style/main.css';
+import Header from './layout/header/Header.jsx'
+import Footer from './layout/footer/Footer.jsx';
+import SignIn from './pages/signin/SignIn.jsx';
+import User from './pages/user/User.jsx';
+import Error from './pages/error/Error.jsx';
 import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store.js'
 import { PersistGate } from 'redux-persist/integration/react';

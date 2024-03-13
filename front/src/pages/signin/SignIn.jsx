@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { signInFailure, signInStart, signInSucces } from '../redux/user/userSlice';
+import { signInFailure, signInStart, signInSucces } from '../../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import './signin.scss';
 
 
 const SignIn = () => {

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import Edit from "../components/Edit";
+import Edit from "../../components/Edit/Edit";
 import { useSelector, useDispatch } from "react-redux";
-import { dataProfile } from '../redux/user/userSlice'
+import { dataProfile } from '../../redux/user/userSlice';
+import './user.scss';
 
 
 
@@ -17,51 +18,58 @@ const User = () => {
     console.log(nameProfile);
 
 
-        
 
-   
-    
-const handleClick = () => {
-    setIsEdit(!isEdit)
 
-}
-useEffect(() => {
-const fetchData = async () => {
-    try {
-        const response = await fetch('http://localhost:3001/api/v1/user/profile',
-        {
-            method: 'POST',
-            headers: {
-              'accept': 'application/json', 
-              'Authorization': 'Bearer '+ token,
-            },
-            body: '',
-            
-          })
-          const dataFetch = await response.json()
-          dispatch(dataProfile(dataFetch))
-          
 
-        // console.log(dataFetch);
-    } catch (error) {
-        console.log("données non récupérées", error);
+
+    const handleClick = () => {
+        setIsEdit(!isEdit)
+
     }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/user/profile',
+                    {
+                        method: 'POST',
+                        headers: {
+                            // 'accept': 'application/json',
+                            'Authorization': 'Bearer ' + token,
+                        },
+                        // body: '',
 
- 
-}
-fetchData()
-}, [])   
+                    })
+                const dataFetch = await response.json()
+                dispatch(dataProfile(dataFetch))
 
-// console.log(dataFetch);
+
+                // console.log(dataFetch);
+            } catch (error) {
+                console.log("données non récupérées", error);
+            }
+
+
+        }
+        fetchData()
+    }, [])
+
+    // console.log(dataFetch);
 
     return (
         <div className="main bg-dark">
             <div className="header">
-                {!isEdit && <Edit />}
-                <div><h1>Welcome back<br />{nameProfile}</h1></div>
-                <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
-                
-                
+                {isEdit ? <Edit /> :
+                    (<div>
+                        <h1>Welcome back<br />{nameProfile}</h1>
+                        <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
+                    </div>
+                    )
+                }
+
+
+
+
+
             </div>
             <h2 className="sr-only">Accounts</h2>
             <section className="account">

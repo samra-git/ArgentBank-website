@@ -1,8 +1,9 @@
 // import React from 'react';
-import logo from '../assets/argentBankLogo.png';
+import logo from '../../assets/argentBankLogo.png';
 import { FaCircleUser } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import './header.scss';
 
 
 const Header = () => {
