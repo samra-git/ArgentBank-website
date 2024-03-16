@@ -87,7 +87,7 @@ const SignIn = () => {
                         {/* <!--  -->Name */}
                     </form>
                     <div>
-                       <p className='error'>{error && 'email et/ou mot de passe incorrect'}</p>
+                       <p className='error'>{error && error}</p>
                     </div>
                 </section>
             </div>

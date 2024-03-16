@@ -5,7 +5,16 @@
     padding: 5px 20px;
 }
 
+// .main-nav-row {
+//   display: flex;
+//   flex-direction: row;
+//   background-color: red;
+// }
 
+.logout {
+  margin: 0;
+  padding: 0;
+}
 .main-nav a {
     font-weight: bold;
     color: #2c3e50;
@@ -25,6 +34,7 @@
     margin-right: 0.5rem;
     display: flex;
     align-items: center;
+    flex-direction: row;
     gap: 5px;
   }
   

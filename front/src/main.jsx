@@ -11,6 +11,7 @@ import Error from './pages/error/Error.jsx';
 import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store.js'
 import { PersistGate } from 'redux-persist/integration/react';
+import PrivateRoute from './components/PrivateRoute.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
@@ -20,11 +21,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
       <Route path="/" element={<App />} />
       <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/user" element={<User />} />
+      <Route element={<PrivateRoute />} >
+        <Route path="/user" element={<User />} />
+      </Route>
       <Route path="*"  element={<Error />} />
       </Routes>
     <Footer />
     </Router>
     </PersistGate>
-   </Provider>,
+   </Provider>
 )

@@ -8,10 +8,14 @@ import './header.scss';
 
 const Header = () => {
   const { currentUser } = useSelector(state => state.user)
-  const getfirstName = useSelector(state => state.user)
-  const nameProfile = (getfirstName.firstName + " " + getfirstName.lastName)
-    console.log(nameProfile);
-  // console.log(currentUser);
+  const getProfile = useSelector(state => state.user)
+
+
+  const nameProfile = (getProfile.firstName + " " + getProfile.lastName)
+  // const connect = () => {
+  //   if (c)
+  // }
+
   return (
     <div>
       <nav className="main-nav">
@@ -23,8 +27,17 @@ const Header = () => {
           />
         </Link>
         <div>
-          <Link to="/sign-in" className="main-nav-item"><FaCircleUser />
-          {currentUser ? <p>{nameProfile}</p> : "Sign In"}</Link>
+          <Link disabled={currentUser} to="/sign-in" className="main-nav-item"><FaCircleUser />
+            {currentUser ? (
+              <div className='main-nav-row'>
+                <p>{nameProfile}</p>                
+              </div>
+            ) : "Sign In"}
+            
+          </Link>
+          {currentUser ? 
+          <p className='logout'>log out</p>
+        : ""}
         </div>
       </nav>
     </div>

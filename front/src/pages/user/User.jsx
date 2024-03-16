@@ -9,41 +9,33 @@ import './user.scss';
 const User = () => {
     const [isEdit, setIsEdit] = useState(false);
     const { currentUser } = useSelector(state => state.user)
-    const getfirstName = useSelector(state => state.user)
+    const profile = useSelector(state => state.user)
     const dispatch = useDispatch()
 
-    // const firstName = currentUser.body.firstName
+    const firstName = profile.firstName
     const token = currentUser.body.token
-    const nameProfile = (getfirstName.firstName + " " + getfirstName.lastName)
+    const nameProfile = (profile.firstName + " " + profile.lastName)
     console.log(nameProfile);
-
-
-
-
+    console.log(firstName);
 
 
     const handleClick = () => {
         setIsEdit(!isEdit)
-
     }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch('http://localhost:3001/api/v1/user/profile',
                     {
                         method: 'POST',
-                        headers: {
-                            // 'accept': 'application/json',
+                        headers: {                           
                             'Authorization': 'Bearer ' + token,
                         },
-                        // body: '',
-
                     })
                 const dataFetch = await response.json()
                 dispatch(dataProfile(dataFetch))
-
-
-                // console.log(dataFetch);
+                console.log(dataFetch);
             } catch (error) {
                 console.log("données non récupérées", error);
             }
@@ -53,14 +45,14 @@ const User = () => {
         fetchData()
     }, [])
 
-    // console.log(dataFetch);
+   
 
     return (
         <div className="main bg-dark">
             <div className="header">
                 {isEdit ? <Edit /> :
                     (<div>
-                        <h1>Welcome back<br />{nameProfile}</h1>
+                        <h1>Welcome back<br />{nameProfile} </h1>
                         <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
                     </div>
                     )
