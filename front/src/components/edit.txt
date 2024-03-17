@@ -2,6 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import './edit.scss';
 import { useState } from "react";
+// import { UseDispatch } from "react-redux";
 import { updateFailure, updateStart, updateSucces } from "../../redux/user/userSlice";
 // import { useState } from "react";
 // import { useNavigate } from "react-router-dom"
@@ -10,19 +11,15 @@ const Edit = () => {
 
     const getProfile = useSelector(state => state.user)
     const { currentUser } = useSelector(state => state.user)
-    const profile = useSelector(state => state.user)
-
     const dispatch = useDispatch();
-    const nameProfile = (profile.firstName + " " + profile.lastName)
+
     const [username, setUsername] = useState(getProfile.userName)
     const token = currentUser.body.token
-    const [isEdit, setIsEdit] = useState(true);
+    // const [isEdit, setIsEdit] = useState(true);
     // const navigate = useNavigate()
-    console.log(token);
 
     const handleClick = () => {
-        // window.location.reload()
-        setIsEdit(!isEdit)
+        window.location.reload()
 
     }
 
@@ -48,12 +45,10 @@ const Edit = () => {
             }
             dispatch(updateSucces(data))
 
-
         } catch (error) {
             console.log(error);
+
             dispatch(updateFailure(error))
-
-
 
         }
     }
@@ -72,13 +67,7 @@ const Edit = () => {
     // console.log(nameProfile);
     return (
         <div className="edit">
-            {!isEdit ? 
-            (<div>
-                        <h1>Welcome back<br />{nameProfile} </h1>
-                        <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
-                    </div>
-                    ) :  (<div>
-                 <h1>Profile</h1>
+            <h1>Profile</h1>
 
             <form onSubmit={fetchUpdateUsername}>
                 <div className="columnInput ">
@@ -97,14 +86,9 @@ const Edit = () => {
             </form>
             <div className="edit-button-profile">
                 <button type="submit" className="edit-button mt-10">save</button>
-                <button onClick={handleClick} className="edit-button mt-10">close</button>
+            <button type="button" onClick={handleClick} className="edit-button mt-10">close</button>
             </div>
-
-            </div>)
-
-        }
-           
-           
+            
         </div>
 
     );

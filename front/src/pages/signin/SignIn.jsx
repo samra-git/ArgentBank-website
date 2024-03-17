@@ -27,6 +27,10 @@ const SignIn = () => {
               });
             console.log(res);
             const data = await res.json();
+            const token = data.body.token
+
+            
+            console.log(token);
             console.log(data);
 
             if (data.status !== 200){
