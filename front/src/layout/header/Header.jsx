@@ -1,31 +1,27 @@
 // import React from 'react';
 import logo from '../../assets/argentBankLogo.png';
 import { useDispatch } from 'react-redux';
-import { FaCircleUser } from 'react-icons/fa6';
+import { FaCircleUser, FaPowerOff } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './header.scss';
 import { logout } from '../../redux/user/userSlice';
-// import { useHistory } from "react-router-dom"
+
 
 
 const Header = () => {
   const { currentUser } = useSelector(state => state.user)
   const getProfile = useSelector(state => state.user)
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
 
   const nameProfile = (getProfile.firstName + " " + getProfile.lastName)
 
   const handleLogout = () => {
     dispatch(logout())
-   
   }
 
-//  if (!token) {
-//     return <navigate to='/sign-in' />;
-//   }
-  
 
   return (
     <div>
@@ -37,7 +33,7 @@ const Header = () => {
             alt="Argent Bank Logo"
           />
         </Link>
-        <div>
+        <div className='main-nav-connect'>
           <Link disabled={currentUser} to="/sign-in" className="main-nav-item"><FaCircleUser />
             {currentUser ? (
               <div className='main-nav-row'>
@@ -46,9 +42,17 @@ const Header = () => {
             ) : "Sign In"}
 
           </Link>
-          {currentUser ?
-            <span onClick={handleLogout} className='logout'>log out</span>
-            : ""}
+          <Link to="/" >
+            {currentUser ?
+            <div>
+               
+              <span onClick={handleLogout} className='logout'> <FaPowerOff /></span>
+              
+            </div> : ""
+}
+          </Link>
+
+
         </div>
       </nav>
     </div>

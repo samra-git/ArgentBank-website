@@ -1,66 +1,131 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { signInFailure, signInStart, signInSucces } from '../../redux/user/userSlice';
+import { rememberData, signInFailure, signInStart, signInSucces } from '../../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import './signin.scss';
 
 
 const SignIn = () => {
     const [formData, setFormData] = useState({});
-    const { loading, error } = useSelector((state) => state.user)
+    const { loading } = useSelector((state) => state.user)
+    const [error, setError] = useState(null)
+    // const [errorPwd, setErrorPwd] = useState(null)
+    const [rememberMe, setRememberMe] = useState(false);
+    // const { emailPwd } = useSelector(state => state.user)
+
+    console.log(error);
+
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+   
+    console.log(formData);
+
+
+    useEffect(() => {
+        // Vérifier s'il y a des informations de connexion dans le localStorage au chargement de la page
+        const rememberedEmail = localStorage.getItem('rememberedEmail');
+        const rememberedPassword = localStorage.getItem('rememberedPassword');
+
+        if (rememberedEmail && rememberedPassword) {
+            setFormData({ email: rememberedEmail, password: rememberedPassword });
+        }
+    }, []);
+
+
+    const handleRemember = (e) => {
+
+        const checked = e.target.checked;
+        setRememberMe(checked);
+
+        if (checked) {
+            // Si Remember Me est coché, sauvegardez les informations d'identification dans le localStorage
+            localStorage.setItem('rememberedEmail', formData.email);
+            localStorage.setItem('rememberedPassword', formData.password);
+        } else {
+            // Si Remember Me est décoché, supprimez les informations d'identification du localStorage
+            localStorage.removeItem('rememberedEmail');
+            localStorage.removeItem('rememberedPassword');
+        }
+
+
+
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             dispatch(signInStart())
+            dispatch(rememberData(formData))
+
             const res = await fetch('http://localhost:3001/api/v1/user/login',
-            {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-              });
-            console.log(res);
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
             const data = await res.json();
             const token = data.body.token
-
-            
-            console.log(token);
             console.log(data);
 
-            if (data.status !== 200){
-                dispatch(signInFailure(data.message))
+            console.log(token);
+
+            if (data.status !== 200) {
+                const errorMsg = await res.json()
+               console.log(errorMsg); 
+                return
                 
-            } else{
+            }
+
+
+
+            if (data.status === false) {
+                dispatch(signInFailure(data.message))
+                console.log(data);
+                return
+
+            } else {
+
+                if (formData.rememberMe) {
+                    localStorage.setItem('rememberedEmail', formData.email);
+                    localStorage.setItem('rememberedPassword', formData.password);
+                } else {
+                    const errorMessage = data.message || 'login failed'
+                    setError(errorMessage)
+                }
                 navigate('/user')
                 dispatch(signInSucces(data))
+
             }
-            
-            // setError(null);
-            
+
 
         } catch (error) {
             dispatch(signInFailure(error.message))
             dispatch(signInStart(false))
+            console.log(error);
+            // const errorMessage = error.message
+            // console.log(errorMessage);
+
 
         }
 
-        console.log(formData);
 
     }
+
+    console.log(error);
     const handleChange = (e) => {
-        // e.preventDefault();
+
         setFormData(
             {
                 ...formData,
                 [e.target.id]: e.target.value,
             }
         )
+
+
     }
     return (
         <>
@@ -71,14 +136,14 @@ const SignIn = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="input-wrapper">
                             <label>Username
-                                <input type="email" id="email" onChange={handleChange} /></label>
+                                <input type="email" id="email" onChange={handleChange} value={formData.email || ''} /></label>
                         </div>
                         <div className="input-wrapper">
                             <label>Password
-                                <input type="password" id="password" onChange={handleChange} /></label>
+                                <input type="password" id="password" onChange={handleChange} value={formData.password || ''} /></label>
                         </div>
                         <div className="input-remember">
-                            <label><input type="checkbox" id="remember-me" />
+                            <label><input type="checkbox" checked={rememberMe} id="remember-me" onChange={handleRemember} />
                                 Remember me</label>
 
                         </div>
@@ -91,7 +156,7 @@ const SignIn = () => {
                         {/* <!--  -->Name */}
                     </form>
                     <div>
-                       <p className='error'>{error && error}</p>
+                        <p className='error'>{error}</p>
                     </div>
                 </section>
             </div>

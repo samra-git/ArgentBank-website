@@ -14,6 +14,14 @@
 .logout {
   margin: 0;
   padding: 0;
+  color:#42b983;
+  font-weight: bolder;
+}
+
+.main-nav-connect {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .main-nav a {
     font-weight: bold;

@@ -78,7 +78,7 @@ const Edit = () => {
                         <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
                     </div>
                     ) :  (<div>
-                 <h1>Profile</h1>
+                 <h1>Edit User Info</h1>
 
             <form onSubmit={fetchUpdateUsername}>
                 <div className="columnInput ">
@@ -96,8 +96,8 @@ const Edit = () => {
 
             </form>
             <div className="edit-button-profile">
-                <button type="submit" className="edit-button mt-10">save</button>
-                <button onClick={handleClick} className="edit-button mt-10">close</button>
+                <button type="submit" className="edit-button mt-10">Save</button>
+                <button onClick={handleClick} className="edit-button mt-10">Cancel</button>
             </div>
 
             </div>)
