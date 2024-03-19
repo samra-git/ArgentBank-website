@@ -9,16 +9,11 @@ import './signin.scss';
 const SignIn = () => {
     const [formData, setFormData] = useState({});
     const { loading } = useSelector((state) => state.user)
-    const [error, setError] = useState(null)
-    // const [errorPwd, setErrorPwd] = useState(null)
     const [rememberMe, setRememberMe] = useState(false);
-    // const { emailPwd } = useSelector(state => state.user)
-
-    console.log(error);
+    const [errorLogin, setErrorLogin] = useState()
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-   
     console.log(formData);
 
 
@@ -47,9 +42,6 @@ const SignIn = () => {
             localStorage.removeItem('rememberedEmail');
             localStorage.removeItem('rememberedPassword');
         }
-
-
-
     }
 
     const handleSubmit = async (e) => {
@@ -68,33 +60,33 @@ const SignIn = () => {
                     body: JSON.stringify(formData),
                 });
             const data = await res.json();
-            const token = data.body.token
+            // const token = data.body.token
+            // localStorage.setItem('token', token)
             console.log(data);
+            if (data.status === 400) {
+                const errorLogin = data.message
+                setErrorLogin(errorLogin);
 
-            console.log(token);
-
-            if (data.status !== 200) {
-                const errorMsg = await res.json()
-               console.log(errorMsg); 
                 return
-                
             }
+            dispatch(signInSucces(data))
+            dispatch(signInSucces(data.body.token))
 
 
 
             if (data.status === false) {
                 dispatch(signInFailure(data.message))
-                console.log(data);
+                console.log(data.message);
                 return
 
-            } else {
+            }
+
+
+            else {
 
                 if (formData.rememberMe) {
                     localStorage.setItem('rememberedEmail', formData.email);
                     localStorage.setItem('rememberedPassword', formData.password);
-                } else {
-                    const errorMessage = data.message || 'login failed'
-                    setError(errorMessage)
                 }
                 navigate('/user')
                 dispatch(signInSucces(data))
@@ -105,9 +97,9 @@ const SignIn = () => {
         } catch (error) {
             dispatch(signInFailure(error.message))
             dispatch(signInStart(false))
-            console.log(error);
-            // const errorMessage = error.message
-            // console.log(errorMessage);
+            console.error(error);
+
+
 
 
         }
@@ -115,7 +107,7 @@ const SignIn = () => {
 
     }
 
-    console.log(error);
+    // console.log(error);
     const handleChange = (e) => {
 
         setFormData(
@@ -155,9 +147,11 @@ const SignIn = () => {
                         {/* <!-- <button class="sign-in-button">Sign In</button> --> */}
                         {/* <!--  -->Name */}
                     </form>
-                    <div>
-                        <p className='error'>{error}</p>
-                    </div>
+                   
+
+                    { <div>
+                        <p className='error'>{errorLogin ? ( errorLogin) : ""}</p>
+                    </div> }
                 </section>
             </div>
         </>
