@@ -56,7 +56,7 @@ const userSlice = createSlice({
             state.lastName = null;
             state.loading = false;
             state.currentUser = null;
-            // localStorage.clear();
+            localStorage.clear();
 
         },
         rememberData: (state, action) => {

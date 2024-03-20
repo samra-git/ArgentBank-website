@@ -16,6 +16,10 @@
   padding: 0;
   color:#42b983;
   font-weight: bolder;
+
+  &:hover {
+    color: red;
+  }
 }
 
 .main-nav-connect {
@@ -44,6 +48,10 @@
     align-items: center;
     flex-direction: row;
     gap: 5px;
+
+    &:hover {
+      color: #42b983;
+    }
   }
   
   .main-nav-item:hover {

@@ -34,19 +34,19 @@ const Header = () => {
           />
         </Link>
         <div className='main-nav-connect'>
-          <Link disabled={currentUser} to="/sign-in" className="main-nav-item"><FaCircleUser />
-            {currentUser ? (
+         {currentUser ?  <Link  to="/user" className="main-nav-item"><FaCircleUser />
+            
               <div className='main-nav-row'>
                 <p>{nameProfile}</p>
               </div>
-            ) : "Sign In"}
+              </Link> : <Link to='/sign-in'>{"Sign In"}</Link>}
 
-          </Link>
+        
           <Link to="/" >
             {currentUser ?
             <div>
                
-              <span onClick={handleLogout} className='logout'> <FaPowerOff /></span>
+              <span onClick={handleLogout} className='logout' title="log out" > <FaPowerOff /></span>
               
             </div> : ""
 }

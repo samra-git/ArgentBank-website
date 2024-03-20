@@ -53,7 +53,7 @@ const User = () => {
         <div className="main bg-dark">
             <div className="header">
                 {isEdit ? <Edit /> :
-                    (<div>
+                    (<div className="headerAccount">
                         <h1>Welcome back<br />{nameProfile} </h1>
                         <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
                     </div>

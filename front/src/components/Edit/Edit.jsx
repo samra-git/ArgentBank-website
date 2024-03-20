@@ -72,39 +72,43 @@ const Edit = () => {
     // console.log(nameProfile);
     return (
         <div className="edit">
-            {!isEdit ? 
-            (<div>
-                        <h1>Welcome back<br />{nameProfile} </h1>
-                        <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
-                    </div>
-                    ) :  (<div>
-                 <h1>Edit User Info</h1>
-
-            <form onSubmit={fetchUpdateUsername}>
-                <div className="columnInput ">
-                    <label>
-                        Username :  <input type="text" value={username} onChange={handleUpdateUsername} onKeyDown={handleKeyDown} />
-                    </label>
-                    <label>
-                        Fistname :  <input type="text" value={getProfile.firstName} readOnly />
-                    </label>
-                    <label>
-                        Lastname :  <input type="text" value={getProfile.lastName} readOnly />
-                    </label>
+            {!isEdit ?
+                (<div>
+                    <h1>Welcome back<br />{nameProfile} </h1>
+                    <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
                 </div>
+                ) : (<div className="editForm">
+
+                    <h1>Edit User Info</h1>
+
+                    <form onSubmit={fetchUpdateUsername}>
+                        <div className="columnInput ">
+                            <div><label htmlFor="username">Username :  </label>
+                                <input type="text" id="username" value={username} className="input-edit" onChange={handleUpdateUsername} onKeyDown={handleKeyDown} />
+                            </div>
+
+                            <div><label htmlFor="firstname">Fistname : </label>
+                                <input type="text" id="firstname" value={getProfile.firstName} className="input-edit" readOnly />
+                            </div>
+
+                            <div><label htmlFor="lastname"> Lastname :</label>
+                                <input type="text" id="lastname" value={getProfile.lastName} className="input-edit" readOnly />
+                            </div>
+
+                        </div>
 
 
-            </form>
-            <div className="edit-button-profile">
-                <button type="submit" className="edit-button mt-10">Save</button>
-                <button onClick={handleClick} className="edit-button mt-10">Cancel</button>
-            </div>
+                    </form>
+                    <div className="edit-button-profile">
+                        <button type="submit" className="edit-button mt-10">Save</button>
+                        <button onClick={handleClick} className="edit-button mt-10">Cancel</button>
+                    </div>
 
-            </div>)
+                </div>)
 
-        }
-           
-           
+            }
+
+
         </div>
 
     );

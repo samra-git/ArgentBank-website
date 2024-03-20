@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { rememberData, signInFailure, signInStart, signInSucces } from '../../redux/user/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { rememberData, signInFailure, signInSucces } from '../../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
 import './signin.scss';
 
 
 const SignIn = () => {
     const [formData, setFormData] = useState({});
-    const { loading } = useSelector((state) => state.user)
+    // const { currentUser } = useSelector((state) => state.user)
+    const [loading, setLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false);
     const [errorLogin, setErrorLogin] = useState()
 
@@ -48,7 +49,8 @@ const SignIn = () => {
         e.preventDefault();
 
         try {
-            dispatch(signInStart())
+            // dispatch(signInStart())
+            setLoading(true)
             dispatch(rememberData(formData))
 
             const res = await fetch('http://localhost:3001/api/v1/user/login',
@@ -64,8 +66,8 @@ const SignIn = () => {
             // localStorage.setItem('token', token)
             console.log(data);
             if (data.status === 400) {
-                const errorLogin = data.message
-                setErrorLogin(errorLogin);
+                const errorLog = data.message
+                setErrorLogin(errorLog);
 
                 return
             }
@@ -93,19 +95,24 @@ const SignIn = () => {
 
             }
 
-
         } catch (error) {
             dispatch(signInFailure(error.message))
-            dispatch(signInStart(false))
+            setLoading(false)
+            // dispatch(signInStart(false))
             console.error(error);
 
+         } finally {
 
-
+            setLoading(false)
+            // Mettre à jour le chargement après un délai de 2 secondes
+            // setTimeout(() => {
+            //     dispatch(signInStart(false));
+            // }, 1000);
 
         }
-
-
     }
+
+  
 
     // console.log(error);
     const handleChange = (e) => {
@@ -141,17 +148,17 @@ const SignIn = () => {
                         </div>
                         {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
                         {/* <Link to="/user">Sign In</Link> */}
-                        <button className="sign-in-button">{!loading ? 'Sign In' : 'loading...'}</button>
+                        <button className="sign-in-button">{loading ?  'loading...' :'Sign In'}</button>
 
                         {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
                         {/* <!-- <button class="sign-in-button">Sign In</button> --> */}
                         {/* <!--  -->Name */}
                     </form>
-                   
 
-                    { <div>
-                        <p className='error'>{errorLogin ? ( errorLogin) : ""}</p>
-                    </div> }
+
+                    {<div>
+                        <p className='error'>{errorLogin ? (errorLogin) : ""}</p>
+                    </div>}
                 </section>
             </div>
         </>
