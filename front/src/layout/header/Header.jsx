@@ -10,13 +10,15 @@ import { logout } from '../../redux/user/userSlice';
 
 
 const Header = () => {
-  const { currentUser } = useSelector(state => state.user)
-  const getProfile = useSelector(state => state.user)
+  const { currentUser, firstName, lastName } = useSelector(state => state.user)
+  // const getProfile = useSelector(state => state.user)
+  console.log(currentUser);
+  console.log(firstName);
 
   const dispatch = useDispatch();
   
 
-  const nameProfile = (getProfile.firstName + " " + getProfile.lastName)
+  // const nameProfile = (getProfile.firstName + " " + getProfile.lastName)
 
   const handleLogout = () => {
     dispatch(logout())
@@ -37,7 +39,7 @@ const Header = () => {
          {currentUser ?  <Link  to="/user" className="main-nav-item"><FaCircleUser />
             
               <div className='main-nav-row'>
-                <p>{nameProfile}</p>
+                <p>{ firstName + " " + lastName }</p>
               </div>
               </Link> : <Link to='/sign-in'>{"Sign In"}</Link>}
 

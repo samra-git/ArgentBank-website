@@ -8,15 +8,12 @@ import './user.scss';
 
 const User = () => {
     const [isEdit, setIsEdit] = useState(false);
-    const { currentUser } = useSelector(state => state.user)
-    const profile = useSelector(state => state.user)
+    const { token, firstName, lastName } = useSelector(state => state.user)
     const dispatch = useDispatch()
 
-    const firstName = profile.firstName
-    const token = currentUser.body.token
-    const nameProfile = (profile.firstName + " " + profile.lastName)
-    console.log(nameProfile);
-    console.log(firstName);
+    // const token = currentUser?.body?.token
+    console.log(token);
+    // console.log(currentUser.body.token);
 
 
     const handleClick = () => {
@@ -54,7 +51,7 @@ const User = () => {
             <div className="header">
                 {isEdit ? <Edit /> :
                     (<div className="headerAccount">
-                        <h1>Welcome back<br />{nameProfile} </h1>
+                        <h1>Welcome back<br />{firstName + " " + lastName} </h1>
                         <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
                     </div>
                     )

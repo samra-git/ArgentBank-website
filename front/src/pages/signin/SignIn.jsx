@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { rememberData, signInFailure, signInSucces } from '../../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
+import { signInFailure, signInStart, signInSucces, signInToken } from '../../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import './signin.scss';
 
 
 const SignIn = () => {
     const [formData, setFormData] = useState({});
-    // const { currentUser } = useSelector((state) => state.user)
+    const { currentUser } = useSelector((state) => state.user)
     const [loading, setLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false);
     const [errorLogin, setErrorLogin] = useState()
@@ -16,6 +16,8 @@ const SignIn = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     console.log(formData);
+    console.log(currentUser);
+    console.log();
 
 
     useEffect(() => {
@@ -49,9 +51,9 @@ const SignIn = () => {
         e.preventDefault();
 
         try {
-            // dispatch(signInStart())
+            dispatch(signInStart())
             setLoading(true)
-            dispatch(rememberData(formData))
+            // dispatch(rememberData(formData))
 
             const res = await fetch('http://localhost:3001/api/v1/user/login',
                 {
@@ -62,17 +64,19 @@ const SignIn = () => {
                     body: JSON.stringify(formData),
                 });
             const data = await res.json();
-            // const token = data.body.token
+            const token = data.body.token
+            
             // localStorage.setItem('token', token)
-            console.log(data);
+            console.log(token);
             if (data.status === 400) {
                 const errorLog = data.message
                 setErrorLogin(errorLog);
 
                 return
             }
-            dispatch(signInSucces(data))
-            dispatch(signInSucces(data.body.token))
+            // dispatch(signInSucces(token))
+            // dispatch(signInSucces(data))
+            dispatch(signInToken(data.body.token))
 
 
 

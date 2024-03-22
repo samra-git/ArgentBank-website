@@ -1,27 +1,27 @@
 // import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import './edit.scss';
-import { useState } from "react";
+import {  useState } from "react";
 import { updateFailure, updateStart, updateSucces } from "../../redux/user/userSlice";
 // import { useState } from "react";
 // import { useNavigate } from "react-router-dom"
 
 const Edit = () => {
 
-    const getProfile = useSelector(state => state.user)
-    const { currentUser } = useSelector(state => state.user)
-    const profile = useSelector(state => state.user)
+    // const getProfile = useSelector(state => state.user)
+    const { lastName, firstName, userName, token } = useSelector(state => state.user)
+    // const profile = useSelector(state => state.user)
 
     const dispatch = useDispatch();
-    const nameProfile = (profile.firstName + " " + profile.lastName)
-    const [username, setUsername] = useState(getProfile.userName)
-    const token = currentUser.body.token
+    // const nameProfile = (profile.firstName + " " + profile.lastName)
+    const [username, setUsername] = useState( userName )
+    // const token = currentUser.body.token
     const [isEdit, setIsEdit] = useState(true);
     // const navigate = useNavigate()
     console.log(token);
 
     const handleClick = () => {
-        // window.location.reload()
+
         setIsEdit(!isEdit)
 
     }
@@ -41,12 +41,14 @@ const Edit = () => {
                 })
 
             const data = await response.json()
+            dispatch(updateSucces(data))
+            // dispatch(dataProfile(data))
+
             console.log(data);
             if (data.status !== 200) {
                 dispatch(updateFailure(data.message))
 
             }
-            dispatch(updateSucces(data))
 
 
         } catch (error) {
@@ -54,11 +56,13 @@ const Edit = () => {
             dispatch(updateFailure(error))
 
 
-
         }
     }
+
+   
     const handleUpdateUsername = (e) => {
         setUsername(e.target.value)
+        // dispatch(dataProfile(e.target.value))
 
     }
     const handleKeyDown = (e) => {
@@ -74,7 +78,7 @@ const Edit = () => {
         <div className="edit">
             {!isEdit ?
                 (<div>
-                    <h1>Welcome back<br />{nameProfile} </h1>
+                    <h1>Welcome back<br />{firstName + " " + lastName} </h1>
                     <button className="edit-button" onClick={() => handleClick(!isEdit)}>Edit Name</button>
                 </div>
                 ) : (<div className="editForm">
@@ -88,11 +92,11 @@ const Edit = () => {
                             </div>
 
                             <div><label htmlFor="firstname">Fistname : </label>
-                                <input type="text" id="firstname" value={getProfile.firstName} className="input-edit" readOnly />
+                                <input type="text" id="firstname" value={firstName} className="input-edit" readOnly />
                             </div>
 
                             <div><label htmlFor="lastname"> Lastname :</label>
-                                <input type="text" id="lastname" value={getProfile.lastName} className="input-edit" readOnly />
+                                <input type="text" id="lastname" value={lastName} className="input-edit" readOnly />
                             </div>
 
                         </div>
@@ -101,7 +105,7 @@ const Edit = () => {
                     </form>
                     <div className="edit-button-profile">
                         <button type="submit" className="edit-button mt-10">Save</button>
-                        <button onClick={handleClick} className="edit-button mt-10">Cancel</button>
+                        <button type="button" onClick={handleClick} className="edit-button mt-10">Cancel</button>
                     </div>
 
                 </div>)
