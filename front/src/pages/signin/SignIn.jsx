@@ -37,11 +37,9 @@ const SignIn = () => {
         setRememberMe(checked);
 
         if (checked) {
-            // Si Remember Me est coché, sauvegardez les informations d'identification dans le localStorage
             localStorage.setItem('rememberedEmail', formData.email);
             localStorage.setItem('rememberedPassword', formData.password);
         } else {
-            // Si Remember Me est décoché, supprimez les informations d'identification du localStorage
             localStorage.removeItem('rememberedEmail');
             localStorage.removeItem('rememberedPassword');
         }
@@ -53,7 +51,6 @@ const SignIn = () => {
         try {
             dispatch(signInStart())
             setLoading(true)
-            // dispatch(rememberData(formData))
 
             const res = await fetch('http://localhost:3001/api/v1/user/login',
                 {
@@ -66,18 +63,14 @@ const SignIn = () => {
             const data = await res.json();
             const token = data.body.token
             
-            // localStorage.setItem('token', token)
             console.log(token);
             if (data.status === 400) {
                 const errorLog = data.message
                 setErrorLogin(errorLog);
-
                 return
             }
-            // dispatch(signInSucces(token))
-            // dispatch(signInSucces(data))
+            
             dispatch(signInToken(data.body.token))
-
 
 
             if (data.status === false) {
@@ -85,10 +78,7 @@ const SignIn = () => {
                 console.log(data.message);
                 return
 
-            }
-
-
-            else {
+            } else {
 
                 if (formData.rememberMe) {
                     localStorage.setItem('rememberedEmail', formData.email);
@@ -102,29 +92,21 @@ const SignIn = () => {
         } catch (error) {
             dispatch(signInFailure(error.message))
             setLoading(false)
-            // dispatch(signInStart(false))
             console.error(error);
 
          } finally {
-
             setLoading(false)
-        
-
+      
         }
     }
 
-  
-
-    // console.log(error);
     const handleChange = (e) => {
-
         setFormData(
             {
                 ...formData,
                 [e.target.id]: e.target.value,
             }
         )
-
 
     }
     return (
@@ -145,17 +127,9 @@ const SignIn = () => {
                         <div className="input-remember">
                             <label><input type="checkbox" checked={rememberMe} id="remember-me" onChange={handleRemember} />
                                 Remember me</label>
-
-                        </div>
-                        {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                        {/* <Link to="/user">Sign In</Link> */}
+                        </div>                     
                         <button className="sign-in-button">{loading ?  'loading...' :'Sign In'}</button>
-
-                        {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
-                        {/* <!-- <button class="sign-in-button">Sign In</button> --> */}
-                        {/* <!--  -->Name */}
                     </form>
-
 
                     {<div>
                         <p className='error'>{errorLogin ? (errorLogin) : ""}</p>
