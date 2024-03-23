@@ -108,10 +108,7 @@ const SignIn = () => {
          } finally {
 
             setLoading(false)
-            // Mettre à jour le chargement après un délai de 2 secondes
-            // setTimeout(() => {
-            //     dispatch(signInStart(false));
-            // }, 1000);
+        
 
         }
     }
