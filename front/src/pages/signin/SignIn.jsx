@@ -8,7 +8,7 @@ import './signin.scss';
 
 const SignIn = () => {
     const [formData, setFormData] = useState({});
-    const { currentUser } = useSelector((state) => state.user)
+    const { currentUser, error } = useSelector((state) => state.user)
     const [loading, setLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false);
     const [errorLogin, setErrorLogin] = useState()
@@ -18,7 +18,7 @@ const SignIn = () => {
     console.log(formData);
     console.log(currentUser);
     console.log();
-
+    console.log(errorLogin);
 
     useEffect(() => {
         // Vérifier s'il y a des informations de connexion dans le localStorage au chargement de la page
@@ -61,20 +61,23 @@ const SignIn = () => {
                     body: JSON.stringify(formData),
                 });
             const data = await res.json();
-            const token = data.body.token
-            
-            console.log(token);
+
+            // console.log(token);
             if (data.status === 400) {
+                dispatch(signInFailure(data.message))
+
                 const errorLog = data.message
                 setErrorLogin(errorLog);
+                console.log(errorLog);
                 return
+            } else {
+                // const token = data.body.token
+                dispatch(signInToken(data.body.token))
+
             }
-            
-            dispatch(signInToken(data.body.token))
 
 
-            if (data.status === false) {
-                dispatch(signInFailure(data.message))
+            if (data.status === 400) {
                 console.log(data.message);
                 return
 
@@ -94,9 +97,9 @@ const SignIn = () => {
             setLoading(false)
             console.error(error);
 
-         } finally {
+        } finally {
             setLoading(false)
-      
+
         }
     }
 
@@ -127,13 +130,13 @@ const SignIn = () => {
                         <div className="input-remember">
                             <label><input type="checkbox" checked={rememberMe} id="remember-me" onChange={handleRemember} />
                                 Remember me</label>
-                        </div>                     
-                        <button className="sign-in-button">{loading ?  'loading...' :'Sign In'}</button>
+                        </div>
+                        <button className="sign-in-button">{loading ? 'loading...' : 'Sign In'}</button>
                     </form>
 
-                    {<div>
-                        <p className='error'>{errorLogin ? (errorLogin) : ""}</p>
-                    </div>}
+                    <div>
+                        <p className='errorLogin'>{errorLogin ? error : ""}</p>
+                    </div>
                 </section>
             </div>
         </>

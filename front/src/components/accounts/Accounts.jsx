@@ -1,12 +1,13 @@
 // import React from 'react';
 
-const Accounts = () => {
+// eslint-disable-next-line
+const Accounts = ({ title, amount, description}) => {
     return (
         <section className="account">
         <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-            <p className="account-amount">$2,082.79</p>
-            <p className="Nameaccount-amount-description">Available Balance</p>
+            <h3 className="account-title">{title}</h3>
+            <p className="account-amount">{amount}</p>
+            <p className="Nameaccount-amount-description">{description}</p>
         </div>
         <div className="account-content-wrapper cta">
             <button className="transaction-button">View transactions</button>
