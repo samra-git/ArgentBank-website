@@ -4,25 +4,16 @@ import './edit.scss';
 import {  useState } from "react";
 import { updateFailure, updateStart, updateSucces } from "../../redux/user/userSlice";
 import { updateUser } from "../../services/api";
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom"
 
 const Edit = () => {
 
-    // const getProfile = useSelector(state => state.user)
     const { lastName, firstName, userName, token } = useSelector(state => state.user)
-    // const profile = useSelector(state => state.user)
-
     const dispatch = useDispatch();
-    // const nameProfile = (profile.firstName + " " + profile.lastName)
     const [username, setUsername] = useState( userName )
-    // const token = currentUser.body.token
     const [isEdit, setIsEdit] = useState(true);
-    // const navigate = useNavigate()
     console.log(token);
 
     const handleClick = () => {
-
         setIsEdit(!isEdit)
 
     }

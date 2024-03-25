@@ -1,5 +1,6 @@
 // import React from 'react';
 import bankTree from "../../assets/bank-tree_1.webp";
+import './hero.scss'
 
 const Hero = () => {
     return (

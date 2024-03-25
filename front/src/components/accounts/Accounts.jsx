@@ -1,4 +1,5 @@
 // import React from 'react';
+import './accounts.scss'
 
 // eslint-disable-next-line
 const Accounts = ({ title, amount, description}) => {
@@ -7,7 +8,7 @@ const Accounts = ({ title, amount, description}) => {
         <div className="account-content-wrapper">
             <h3 className="account-title">{title}</h3>
             <p className="account-amount">{amount}</p>
-            <p className="Nameaccount-amount-description">{description}</p>
+            <p className="account-amount-description">{description}</p>
         </div>
         <div className="account-content-wrapper cta">
             <button className="transaction-button">View transactions</button>
