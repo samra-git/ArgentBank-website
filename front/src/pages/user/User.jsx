@@ -6,6 +6,7 @@ import { dataProfile } from '../../redux/user/userSlice';
 import { accounts } from '../../datas/data'
 import './user.scss';
 import Accounts from "../../components/accounts/Accounts";
+import { profileUser } from "../../services/api";
 
 
 
@@ -26,14 +27,8 @@ const User = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/v1/user/profile',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer ' + token,
-                        },
-                    })
-                const dataFetch = await response.json()
+                const dataFetch = await profileUser(token)
+               
                 dispatch(dataProfile(dataFetch))
                 console.log(dataFetch);
             } catch (error) {

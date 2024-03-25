@@ -11,15 +11,11 @@ import { logout } from '../../redux/user/userSlice';
 
 const Header = () => {
   const { currentUser, firstName } = useSelector(state => state.user)
-  // const getProfile = useSelector(state => state.user)
   console.log(currentUser);
   console.log(firstName);
 
   const dispatch = useDispatch();
   
-
-  // const nameProfile = (getProfile.firstName + " " + getProfile.lastName)
-
   const handleLogout = () => {
     dispatch(logout())
   }
@@ -53,7 +49,6 @@ const Header = () => {
             </div> : ""
 }
           </Link>
-
 
         </div>
       </nav>

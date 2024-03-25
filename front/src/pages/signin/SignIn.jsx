@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInFailure, signInStart, signInSucces, signInToken } from '../../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import './signin.scss';
+import { signInUser } from '../../services/api';
 
 
 const SignIn = () => {
@@ -51,55 +52,28 @@ const SignIn = () => {
         try {
             dispatch(signInStart())
             setLoading(true)
+            const data = await signInUser(formData);
 
-            const res = await fetch('http://localhost:3001/api/v1/user/login',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                });
-            const data = await res.json();
-
-            // console.log(token);
             if (data.status === 400) {
                 dispatch(signInFailure(data.message))
-
-                const errorLog = data.message
-                setErrorLogin(errorLog);
-                console.log(errorLog);
+                setErrorLogin(data.message);
                 return
             } else {
-                // const token = data.body.token
                 dispatch(signInToken(data.body.token))
-
-            }
-
-
-            if (data.status === 400) {
-                console.log(data.message);
-                return
-
-            } else {
-
                 if (formData.rememberMe) {
                     localStorage.setItem('rememberedEmail', formData.email);
                     localStorage.setItem('rememberedPassword', formData.password);
                 }
+            }                
                 navigate('/user')
                 dispatch(signInSucces(data))
-
-            }
 
         } catch (error) {
             dispatch(signInFailure(error.message))
             setLoading(false)
             console.error(error);
-
         } finally {
             setLoading(false)
-
         }
     }
 

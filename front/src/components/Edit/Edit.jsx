@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import './edit.scss';
 import {  useState } from "react";
 import { updateFailure, updateStart, updateSucces } from "../../redux/user/userSlice";
+import { updateUser } from "../../services/api";
 // import { useState } from "react";
 // import { useNavigate } from "react-router-dom"
 
@@ -29,40 +30,22 @@ const Edit = () => {
     const fetchUpdateUsername = async () => {
 
         try {
-            dispatch(updateStart())
-            const response = await fetch('http://localhost:3001/api/v1/user/profile',
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-                    },
-                    body: JSON.stringify({ userName: username })
-                })
-
-            const data = await response.json()
+            dispatch(updateStart()) 
+            const data = await updateUser(username, token)
             dispatch(updateSucces(data))
-            // dispatch(dataProfile(data))
-
             console.log(data);
             if (data.status !== 200) {
                 dispatch(updateFailure(data.message))
-
             }
-
-
         } catch (error) {
             console.log(error);
             dispatch(updateFailure(error))
-
-
         }
     }
 
    
     const handleUpdateUsername = (e) => {
         setUsername(e.target.value)
-        // dispatch(dataProfile(e.target.value))
 
     }
     const handleKeyDown = (e) => {
@@ -73,7 +56,6 @@ const Edit = () => {
 
     console.log(username);
 
-    // console.log(nameProfile);
     return (
         <div className="edit">
             {!isEdit ?
