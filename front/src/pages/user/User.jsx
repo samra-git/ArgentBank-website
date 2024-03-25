@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Edit from "../../components/Edit/Edit";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { dataProfile } from '../../redux/user/userSlice';
 import { accounts } from '../../datas/data'
 import './user.scss';
@@ -12,12 +13,15 @@ const User = () => {
     const [isEdit, setIsEdit] = useState(false);
     const { token, firstName, lastName } = useSelector(state => state.user)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     console.log(token);
 
     const handleClick = () => {
         setIsEdit(!isEdit)
     }
+
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +45,9 @@ const User = () => {
         fetchData()
     }, [dispatch, token])
 
-
+    if (!token) {
+        navigate('/sign-in')
+    }
 
 
 
