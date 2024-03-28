@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import Edit from "../../components/Edit/Edit";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { dataProfile } from '../../redux/user/userSlice';
+import { dataProfile, signInFailure } from '../../redux/user/userSlice';
 import { accounts } from '../../datas/data'
 import './user.scss';
 import Accounts from "../../components/accounts/Accounts";
@@ -14,25 +13,23 @@ const User = () => {
     const [isEdit, setIsEdit] = useState(false);
     const { token, firstName, lastName } = useSelector(state => state.user)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
-    console.log(token);
 
     const handleClick = () => {
         setIsEdit(!isEdit)
     }
 
-    
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const dataFetch = await profileUser(token)
-               
+
                 dispatch(dataProfile(dataFetch))
-                console.log(dataFetch);
             } catch (error) {
-                console.log("données non récupérées", error);
+                dispatch(signInFailure(error.message))
+
             }
 
 
@@ -40,9 +37,7 @@ const User = () => {
         fetchData()
     }, [dispatch, token])
 
-    if (!token) {
-        navigate('/sign-in')
-    }
+   
 
 
 

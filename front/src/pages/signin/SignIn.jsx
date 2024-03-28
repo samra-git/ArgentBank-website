@@ -9,20 +9,16 @@ import { signInUser } from '../../services/api';
 
 const SignIn = () => {
     const [formData, setFormData] = useState({});
-    const { currentUser, error } = useSelector((state) => state.user)
+    const { error } = useSelector((state) => state.user)
     const [loading, setLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false);
     const [errorLogin, setErrorLogin] = useState()
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    console.log(formData);
-    console.log(currentUser);
-    console.log();
-    console.log(errorLogin);
+   
 
     useEffect(() => {
-        // Vérifier s'il y a des informations de connexion dans le localStorage au chargement de la page
         const rememberedEmail = localStorage.getItem('rememberedEmail');
         const rememberedPassword = localStorage.getItem('rememberedPassword');
 
@@ -64,14 +60,13 @@ const SignIn = () => {
                     localStorage.setItem('rememberedEmail', formData.email);
                     localStorage.setItem('rememberedPassword', formData.password);
                 }
-            }                
-                navigate('/user')
-                dispatch(signInSucces(data))
+            }
+            navigate('/user')
+            dispatch(signInSucces(data))
 
         } catch (error) {
             dispatch(signInFailure(error.message))
             setLoading(false)
-            console.error(error);
         } finally {
             setLoading(false)
         }
@@ -109,7 +104,7 @@ const SignIn = () => {
                     </form>
 
                     <div>
-                        <p className='errorLogin'>{errorLogin ? error : ""}</p>
+                        <p className='errorLogin'>{errorLogin ? error : ""}</p >
                     </div>
                 </section>
             </div>

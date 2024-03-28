@@ -17,14 +17,10 @@ const userSlice = createSlice({
             state.loading = true
         },
         signInSucces: (state, action) => {
-            // const { currentUser } = action.payload;
-            // state.currentUser = currentUser;
-            // state.token = currentUser.body.token;
             state.loading = false;
             state.error = null;
             state.currentUser = action.payload;
-            // state.loading = false;
-            // state.error = null;
+           
         },
         signInToken: (state, action) => {
             state.token = action.payload;
@@ -35,8 +31,8 @@ const userSlice = createSlice({
         },
         dataProfile: (state, action) => {
             const { email, firstName, lastName, userName } = action.payload.body || {};
-            state.currentUser = action.payload.body; // Si vous avez besoin de stocker les données complètes dans currentUser
-            state.email = email || ''; // Assurez-vous de fournir une valeur par défaut
+            state.currentUser = action.payload.body; // 
+            state.email = email || '';
             state.firstName = firstName || '';
             state.lastName = lastName || '';
             state.userName = userName || '';

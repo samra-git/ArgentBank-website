@@ -1,5 +1,6 @@
 import './features.scss'
 // import PropTypes from "prop-types"
+
 // eslint-disable-next-line
 const Features = ({ picture, title, description }) => {
     

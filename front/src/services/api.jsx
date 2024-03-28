@@ -20,6 +20,7 @@ export const  signInUser = async (formData) => {
 
 
 export const profileUser = async (token) => {
+
     try {
         const response = await fetch(`${URL_API}/profile`,
         {
@@ -38,8 +39,9 @@ export const profileUser = async (token) => {
 
 
 export const updateUser = async (username, token) => {
+    
     try {
-        const response = await fetch(`${URL_API}/user`,
+        const response = await fetch(`${URL_API}/profile`,
         {
             method: 'PUT',
             headers: {

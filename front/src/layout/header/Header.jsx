@@ -11,8 +11,7 @@ import { logout } from '../../redux/user/userSlice';
 
 const Header = () => {
   const { currentUser, firstName } = useSelector(state => state.user)
-  console.log(currentUser);
-  console.log(firstName);
+ 
 
   const dispatch = useDispatch();
   

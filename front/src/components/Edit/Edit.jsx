@@ -11,11 +11,9 @@ const Edit = () => {
     const dispatch = useDispatch();
     const [username, setUsername] = useState( userName )
     const [isEdit, setIsEdit] = useState(true);
-    console.log(token);
 
     const handleClick = () => {
         setIsEdit(!isEdit)
-
     }
 
     const fetchUpdateUsername = async () => {
@@ -24,12 +22,10 @@ const Edit = () => {
             dispatch(updateStart()) 
             const data = await updateUser(username, token)
             dispatch(updateSucces(data))
-            console.log(data);
             if (data.status !== 200) {
                 dispatch(updateFailure(data.message))
             }
         } catch (error) {
-            console.log(error);
             dispatch(updateFailure(error))
         }
     }
@@ -45,7 +41,6 @@ const Edit = () => {
         }
     }
 
-    console.log(username);
 
     return (
         <div className="edit">
