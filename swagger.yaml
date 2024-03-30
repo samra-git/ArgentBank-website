@@ -107,7 +107,7 @@ paths:
           - Bearer: []
       tags:
         - Account and Transactions Module
-      summary: Edit an account by Id
+      summary: Edit accounts 
       description: API for editing accounts 
       parameters:
         - in: path
@@ -119,22 +119,70 @@ paths:
         - application/json
       responses:
         '200':
-          description: Account retrieved successully
+          description: Accounts retrieved successfully
           schema:
-            $ref: '#/definitions/AccountResponse'
+            type: array
+            items:
+              type: object
+              properties: 
+                accountId1:
+                  type: string
+                  description: account ID
+                accountName1:
+                  type: string
+                  description: account name
+                accountCurrency1:
+                  type: string
+                  description: account currency
+                currentBalance1:
+                  type: number
+                  description: current account balance
+            example:
+              - accountId1: string
+                accountName1: 
+                  type: string
+                  description: account Name
+                accountcurrency1: 
+                  type: string
+                  description: account currency
+                currentBalance1:
+                  type: number
+                  description: current account balance
+              - accountId2: string
+                accountName2: 
+                  type: string
+                  description: account Name
+                accountcurrency2: 
+                  type: string
+                  description: account currency
+                currentBalance2:
+                  type: number
+                  description: current account balance
+              - accountId3: string
+                accountName3: 
+                  type: string
+                  description: account Name
+                accountcurrency3: 
+                  type: string
+                  description: account currency
+                currentBalance3:
+                  type: number
+                  description: current account balance
         '400':
           description: Invalid Fields
+        '403': 
+          description: Forbidden
         '404':
           description: User not found
         '500':
           description: Internal Server Error
-  /user/accounts/account/{accountId}:
+  /user/accounts/account/{accountId}/transactions:
     get:
       security:
           - Bearer: []
       tags:
         - Account and Transactions Module
-      summary: Edit a transactions by Id
+      summary: Edit an account by Id
       description: API for editing a transaction by id
       operationId: getTransactionById
       parameters:
@@ -149,15 +197,46 @@ paths:
         '200':
           description: Account retrieved successully
           schema:
-            $ref: '#/definitions/TransactionResponse'
+            $ref: '#/definitions/TransactionsResponse'
         '400':
           description: Invalid Fields
+        '403': 
+          description: Forbidden
         '404':
           description: Transaction not found
         '500':
           description: Internal Server Error
-  /user/accounts/account/{accountId}/transactions/{transactionId}/category:
-    put:
+  /user/accounts/account/{accountId}/transactions/{transactionsId}:
+    get:
+      security:
+          - Bearer: []
+      tags:
+        - Account and Transactions Module
+      summary: Edit a transaction by Id
+      description: API for editing a transaction by id
+      operationId: getAccountsById
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of an account
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '400':
+          description: Invalid Fields
+        '403': 
+          description: Forbidden
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    patch:
       security:
         - Bearer: []
       tags: 
@@ -184,7 +263,6 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-  /user/accounts/account/{accountId}/transactions/{transactionId}/note:
     post:
       security:
         - Bearer: []
@@ -249,9 +327,8 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-      
-      
     
+ 
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -322,11 +399,44 @@ definitions:
         currentBalance:
           type: number
           description: current account balance
+  TransactionsResponse:
+      type: array
+      items: 
+        type: object
+        properties:
+          Id: 
+            type: integer
+            format: int64
+            description: transaction ID
+          transactionType:
+            type: string
+            description: type of transaction
+          date:
+            type: string
+            format: date-time
+            description: date of transaction
+          description:
+            type: string
+            example: "Golden Sun Bakery"
+          amount:
+            type: number
+            description: transaction amout
+          balance:
+            type: number
+            description: available balance
+            format: double
+          category:
+            type: string
+            description: name of the category
+          note: 
+            type: string
+            description: user note
   TransactionResponse:
       type: object
       properties:
-        transactionID: 
-          type: string
+        Id: 
+          type: integer
+          format: int64
           description: transaction ID
         transactionType:
           type: string
@@ -337,7 +447,7 @@ definitions:
           description: date of transaction
         description:
           type: string
-          description: description of transaction
+          example: "Golden Sun Bakery"
         amount:
           type: number
           description: transaction amout
