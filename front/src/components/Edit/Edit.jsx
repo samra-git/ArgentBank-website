@@ -72,7 +72,7 @@ const Edit = () => {
 
                     </form>
                     <div className="edit-button-profile">
-                        <button type="submit" className="edit-button mt-10">Save</button>
+                        <button type="submit" onClick={fetchUpdateUsername} className="edit-button mt-10">Save</button>
                         <button type="button" onClick={handleClick} className="edit-button mt-10">Cancel</button>
                     </div>
 

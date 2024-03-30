@@ -16,7 +16,7 @@ const SignIn = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-   
+
 
     useEffect(() => {
         const rememberedEmail = localStorage.getItem('rememberedEmail');
@@ -59,11 +59,10 @@ const SignIn = () => {
                 if (formData.rememberMe) {
                     localStorage.setItem('rememberedEmail', formData.email);
                     localStorage.setItem('rememberedPassword', formData.password);
-                }
+                } 
+                navigate('/user')
+                dispatch(signInSucces(data))
             }
-            navigate('/user')
-            dispatch(signInSucces(data))
-
         } catch (error) {
             dispatch(signInFailure(error.message))
             setLoading(false)

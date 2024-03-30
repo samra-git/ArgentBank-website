@@ -8,7 +8,6 @@ import { features } from '../../datas/data';
 const Home = () => {
     const [dataFeatures, setDatafeatures] = useState([])
 
-
     useEffect(() => {
         setDatafeatures(features)
     }, [])
